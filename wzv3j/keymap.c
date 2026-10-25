@@ -29,14 +29,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, DRAG_SCROLL,    KC_MS_BTN2,     KC_MS_BTN1,     KC_MS_BTN3,                                     KC_ESCAPE,      KC_BSPC,        KC_DELETE,      KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, OSM(MOD_LSFT),  OSM(MOD_LALT),  OSM(MOD_LGUI),  OSM(MOD_LCTL),  OSM(MOD_HYPR),                                  KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_ENTER,       KC_TRANSPARENT, 
     KC_TRANSPARENT, ST_MACRO_0,     ST_MACRO_1,     ST_MACRO_2,     ST_MACRO_3,     LCTL(KC_B),                                     KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_DELETE,      KC_TRANSPARENT, 
-                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, MO(3)
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [2] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, LSFT(KC_KP_0),  LSFT(KC_KP_DOT),KC_KP_DOT,      KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_GRAVE,       KC_LPRN,        KC_LCBR,        KC_LBRC,        KC_LABK,                                        KC_RABK,        KC_RBRC,        KC_RCBR,        KC_RPRN,        KC_CIRC,        KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_AT,          KC_ASTR,        KC_UNDS,        KC_MINUS,       KC_PLUS,                                        KC_BSLS,        OSM(MOD_LCTL),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LSFT),  KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_AMPR,        KC_SCLN,        KC_COLN,        KC_EQUAL,       KC_EXLM,                                        KC_TILD,        KC_PIPE,        KC_DLR,         KC_HASH,        KC_PERC,        KC_TRANSPARENT, 
-                                                    MO(3),          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [3] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_F8,          KC_F7,          KC_F6,          KC_F5,          KC_F9,                                          KC_F10,         KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_TRANSPARENT, 
@@ -54,6 +54,13 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
   'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R', 
   '*', '*', '*', '*'
 );
+
+// Tri-layer: nav (1) + sym (2) held together activates fn (3), whatever the press
+// or release order. The thumb keys stay transparent on layers 1-3 so each one keeps
+// resolving to its base-layer MO() and only ever toggles its own layer.
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, 1, 2, 3);
+}
 
 
 
